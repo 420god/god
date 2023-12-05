@@ -38,7 +38,6 @@
             padding: 5px 10px;
             cursor: pointer;
         }
-
         .tab-container {
             display: flex;
             overflow-x: auto;
@@ -114,14 +113,13 @@
 
     <script>
         var savedTexts = {};
-        
+
          function activateAdditionalTab(tab) {
             var additionalTabs = document.querySelectorAll('#additional-tabs .tab');
             additionalTabs.forEach(addTab => {
                 addTab.classList.remove('active');
             });
             tab.classList.add('active');
-
              // 선택된 탭의 텍스트를 녹음 버튼 위에 표시
             document.getElementById('selected-tab-text').textContent = tab.textContent;
         }
@@ -130,7 +128,7 @@
             transcriptBox.innerText = savedTexts[tabKey] || '';
         }
 
- 
+
 
         function activateTab(tabName) {
             var tabs = document.querySelectorAll('.tab-container .tab');
@@ -140,11 +138,9 @@
                     tab.classList.add('active');
                 }
             });
-
             var additionalTabs = document.getElementById('additional-tabs');
             additionalTabs.innerHTML = '';
             additionalTabs.style.display = 'flex';
-
             var tabData = {
                 '작성정보': ['책임자', '작성자', '직급'],
                 '디테일': ['프로젝트명', '날씨', '내용'],
@@ -153,55 +149,46 @@
                 '장비': ['장비명', '수량'],
                 '일자리': ['이름', '직무', '근무시간']
             };
-
             var additionalTabs = document.getElementById('additional-tabs');
     additionalTabs.innerHTML = '';
     var tabTexts = tabData[tabName] || [];
-    tabTexts.forEach((text, index) => {
+    tabTexts.forEach(text => {
         var newTab = document.createElement('div');
         newTab.className = 'tab';
-        newTab.textContent = text;
+        newTab.textContent = text; // 커스텀 텍스트 사용
         newTab.onclick = function() { activateAdditionalTab(this); };
         additionalTabs.appendChild(newTab);
-
-        // 첫 번째 추가 탭을 자동으로 활성화
         if (index === 0) {
-            activateAdditionalTab(newTab);
-        }
+                    activateAdditionalTab(newTab);
+                }
     });
 }
 
         var recognition;
         var transcriptBox = document.getElementById('transcript-box');
-
         if ('webkitSpeechRecognition' in window) {
             recognition = new webkitSpeechRecognition();
             recognition.lang = 'ko-KR'; // 한국어 설정
             recognition.continuous = false;
             recognition.interimResults = false;
-
             recognition.onresult = function(event) {
                 var transcript = event.results[0][0].transcript;
                 transcriptBox.innerText += transcript + ' ';
             };
-
             recognition.onerror = function(event) {
                 console.error('Speech recognition error', event.error);
             };
-
             var recordButton = document.getElementById('record-button');
             recordButton.addEventListener('touchstart', function(e) {
                 e.preventDefault();
                 recognition.start();
                 recordButton.style.backgroundColor = 'green';
             }, false);
-
             recordButton.addEventListener('touchend', function(e) {
                 e.preventDefault();
                 recognition.stop();
                 recordButton.style.backgroundColor = 'red';
             }, false);
-
             var backButton = document.getElementById('back-button');
             backButton.onclick = function() {
                 transcriptBox.innerText = '';
