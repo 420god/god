@@ -93,16 +93,7 @@
     <button id="back-button">텍스트 초기화</button>
 
     <script>
-        //function activateTab(tabName) {
-            // 기본 탭 활성화 상태 업데이트
-       //     var tabs = document.querySelectorAll('.tab-container .tab');
-        //    tabs.forEach(tab => {
-         //       tab.classList.remove('active');
-         //       if (tab.textContent === tabName) {
-          //          tab.classList.add('active');
-           //     }
-           // });
-
+        
          function activateAdditionalTab(tab) {
             var additionalTabs = document.querySelectorAll('#additional-tabs .tab');
             additionalTabs.forEach(addTab => {
@@ -110,6 +101,8 @@
             });
             tab.classList.add('active');
         }
+
+ 
 
         function activateTab(tabName) {
             var tabs = document.querySelectorAll('.tab-container .tab');
