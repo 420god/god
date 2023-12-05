@@ -1,59 +1,55 @@
-<!<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title></title>
-
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>음성 인식 제어 예제</title>
+    <style>
+      #record-icon {
+        cursor: pointer;
+        font-size: 2rem;
+      }
+    </style>
   </head>
-
   <body>
-    <h1><a href ="index.html">철교수 연구소</a></h1>
+    <div id="record-icon">🎤</div>
+    <div id="transcript"></div>
 
-    <div id="grid">
+    <script>
+      var recognition;
+      var isRecording = false;
+      if ("webkitSpeechRecognition" in window) {
+        recognition = new webkitSpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = true;
 
-    <ol>
-      <div> 제자들 </div>
-      <li><a href ="jkon.html">제이쿤</a></li>
-      <li><a href ="hwba.html">휘바</a></li>
-      <li><a href ="jesong.html">필리핀</a></li>
-      </ol>
-      <div>
-      <h2> 철교수란</h2>
-        <p>
-          <img src="1.jpg" width = "30%">
-          <br><br>
-          철교수란 세계평화를 위해 힘쓰는 정의로운 교수라고 할수있다.<br><br>
-            미련한 제자들을 일깨워 주고자 힘쓰는 정의로운 그자체
-            케일과 같은존재 라고 할수있다.<br> 세명의 제자를 두고 있으며 제자들이
-            세상을 파괴하는거을 막고있다.
+        recognition.onresult = function (event) {
+          var transcript = "";
+          for (var i = event.resultIndex; i < event.results.length; ++i) {
+            transcript += event.results[i][0].transcript;
+          }
+          document.getElementById("transcript").innerText = transcript;
+        };
 
-</p>
- </div>
-</div>
-      </body>
+        recognition.onerror = function (event) {
+          console.error("Recognition error", event.error);
+        };
 
-      <style>
-    #grid {
-      display: grid;
-      grid-template-columns: 150px 1fr;
-    }
-
-
-        h1 {
-          margin: 0px;
-          pedding:20px;
-          font-size: 45px;
-          text-align: center;
-          border-bottom: 1px solid gray;
-        }
-        ol {
-        border-right: 1px solid gray;
-        margin: 0px;
-        padding: 20px;
-        width:100px;
-
-        body{
-                 magin:0px;
-        }
-        </style>
-    </html>
+        var recordIcon = document.getElementById("record-icon");
+        recordIcon.onclick = function () {
+          if (isRecording) {
+            recognition.stop();
+            recordIcon.textContent = "🎤";
+          } else {
+            recognition.start();
+            recordIcon.textContent = "⏹️";
+          }
+          isRecording = !isRecording;
+        };
+      } else {
+        document.getElementById("transcript").innerText =
+          "이 브라우저는 음성 인식을 지원하지 않습니다.";
+      }
+    </script>
+  </body>
+</html>
