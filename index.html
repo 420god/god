@@ -103,17 +103,7 @@
            //     }
            // });
 
-        function activateTab(tabName) {
-    // 기본 탭 활성화 상태 업데이트
-    var tabs = document.querySelectorAll('.tab-container .tab');
-    tabs.forEach(tab => {
-        tab.classList.remove('active');
-        if (tab.textContent === tabName) {
-            tab.classList.add('active');
-        }
-    });
-
-            function activateAdditionalTab(tab) {
+         function activateAdditionalTab(tab) {
             var additionalTabs = document.querySelectorAll('#additional-tabs .tab');
             additionalTabs.forEach(addTab => {
                 addTab.classList.remove('active');
@@ -121,10 +111,18 @@
             tab.classList.add('active');
         }
 
-            // 추가 탭 생성
+        function activateTab(tabName) {
+            var tabs = document.querySelectorAll('.tab-container .tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.textContent === tabName) {
+                    tab.classList.add('active');
+                }
+            });
+
             var additionalTabs = document.getElementById('additional-tabs');
-            additionalTabs.innerHTML = ''; // 기존 탭 삭제
-            additionalTabs.style.display = 'flex'; // 추가 탭 컨테이너 표시
+            additionalTabs.innerHTML = '';
+            additionalTabs.style.display = 'flex';
 
             var tabData = {
                 '작성정보': 3,
@@ -135,11 +133,12 @@
                 '일자리': 3
             };
 
-            var numberOfTabs = tabData[tabName] || 0; // 선택된 탭에 해당하는 추가 탭 수
+            var numberOfTabs = tabData[tabName] || 0;
             for (var i = 0; i < numberOfTabs; i++) {
                 var newTab = document.createElement('div');
                 newTab.className = 'tab';
                 newTab.textContent = tabName + ' 탭 ' + (i + 1);
+                newTab.onclick = function() { activateAdditionalTab(this); }; // 클릭 이벤트 핸들러 추가
                 additionalTabs.appendChild(newTab);
             }
         }
