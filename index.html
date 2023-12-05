@@ -69,24 +69,6 @@
             color: #000;
             font-weight: bold;
         }
-        .button {
-            padding: 10px 15px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .button:hover {
-            background-color: #007bff;
-            color: white;
-        }
-        .save-button {
-            background-color: #28a745;
-            color: white;
-        }
-        
         @media (max-width: 600px) {
             .tab {
                 font-size: 12px; /* 폰트 크기 줄임 */
@@ -109,11 +91,8 @@
     <div id="record-button">🎤</div>
     <div id="transcript-box" contenteditable="true"></div>
     <button id="back-button">텍스트 초기화</button>
-    <button id="save-button" class="button save-button">저장</button>
-
     <script>
-        var savedTexts = {};
-
+        
          function activateAdditionalTab(tab) {
             var additionalTabs = document.querySelectorAll('#additional-tabs .tab');
             additionalTabs.forEach(addTab => {
@@ -123,13 +102,7 @@
              // 선택된 탭의 텍스트를 녹음 버튼 위에 표시
             document.getElementById('selected-tab-text').textContent = tab.textContent;
         }
-        var transcriptBox = document.getElementById('transcript-box');
-            var tabKey = tab.textContent;
-            transcriptBox.innerText = savedTexts[tabKey] || '';
-        }
-
-
-
+ 
         function activateTab(tabName) {
             var tabs = document.querySelectorAll('.tab-container .tab');
             tabs.forEach(tab => {
@@ -158,12 +131,8 @@
         newTab.textContent = text; // 커스텀 텍스트 사용
         newTab.onclick = function() { activateAdditionalTab(this); };
         additionalTabs.appendChild(newTab);
-        if (index === 0) {
-                    activateAdditionalTab(newTab);
-                }
     });
 }
-
         var recognition;
         var transcriptBox = document.getElementById('transcript-box');
         if ('webkitSpeechRecognition' in window) {
@@ -196,16 +165,6 @@
         } else {
             transcriptBox.innerText = "이 브라우저는 음성 인식을 지원하지 않습니다.";
         }
-
-        function saveText() {
-            var selectedTabText = document.getElementById('selected-tab-text').textContent;
-            var transcriptBox = document.getElementById('transcript-box');
-            savedTexts[selectedTabText] = transcriptBox.innerText;
-        }
-
-        // 저장 버튼 이벤트 리스너 추가
-        var saveButton = document.getElementById('save-button');
-        saveButton.addEventListener('click', saveText);
     </script>
 </body>
 </html>
