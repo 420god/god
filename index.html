@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>음성 인식 인터페이스</title>
+    <title>모바일용 음성 인식 인터페이스</title>
     <style>
         #record-button {
             width: 100px;
@@ -49,13 +49,15 @@
             };
 
             var recordButton = document.getElementById('record-button');
-            recordButton.onmousedown = function() {
+            
+            // 모바일 이벤트 추가
+            recordButton.ontouchstart = function() {
                 recognition.start();
                 recordButton.style.backgroundColor = 'green';
                 recordButton.textContent = '녹음 중...';
             };
 
-            recordButton.onmouseup = recordButton.onmouseleave = function() {
+            recordButton.ontouchend = function() {
                 recognition.stop();
                 recordButton.style.backgroundColor = 'red';
                 recordButton.textContent = '녹음';
