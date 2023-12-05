@@ -83,14 +83,6 @@
     <div id="transcript-box" contenteditable="true"></div>
     <button id="back-button">텍스트 초기화</button>
 
-    function activateTab(tabElement) {
-            var tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-            });
-            tabElement.classList.add('active');
-        }
-
     <script>
         var recognition;
         var transcriptBox = document.getElementById('transcript-box');
@@ -129,6 +121,14 @@
             };
         } else {
             transcriptBox.innerText = "이 브라우저는 음성 인식을 지원하지 않습니다.";
+        }
+
+        function activateTab(tabElement) {
+            var tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            tabElement.classList.add('active');
         }
     </script>
 </body>
