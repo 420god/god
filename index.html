@@ -131,6 +131,12 @@
         newTab.textContent = text; // 커스텀 텍스트 사용
         newTab.onclick = function() { activateAdditionalTab(this); };
         additionalTabs.appendChild(newTab);
+        
+        if (!firstTabActivated) {
+            activateAdditionalTab(newTab);
+            firstTabActivated = true;
+        }
+    });
     });
 }
         var recognition;
