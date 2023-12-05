@@ -17,6 +17,7 @@
             cursor: pointer;
             border: none;
             outline: none;
+            user-select: none; /* 텍스트 선택 방지 */
         }
         #transcript {
             margin-top: 20px;
@@ -29,7 +30,7 @@
     </style>
 </head>
 <body>
-    <button id="record-button">녹음</button>
+    <div id="record-button">🎤</div> <!-- 버튼 대신 div 사용 -->
     <div id="transcript"></div>
     <button id="back-button">텍스트 초기화</button>
 
@@ -50,18 +51,18 @@
 
             var recordButton = document.getElementById('record-button');
             
-            // 모바일 이벤트 추가
-            recordButton.ontouchstart = function() {
+            // 모바일 터치 이벤트 정확하게 처리
+            recordButton.addEventListener('touchstart', function(e) {
+                e.preventDefault(); // 기본 행동 방지
                 recognition.start();
                 recordButton.style.backgroundColor = 'green';
-                recordButton.textContent = '녹음 중...';
-            };
+            }, false);
 
-            recordButton.ontouchend = function() {
+            recordButton.addEventListener('touchend', function(e) {
+                e.preventDefault(); // 기본 행동 방지
                 recognition.stop();
                 recordButton.style.backgroundColor = 'red';
-                recordButton.textContent = '녹음';
-            };
+            }, false);
 
             var backButton = document.getElementById('back-button');
             backButton.onclick = function() {
