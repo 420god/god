@@ -70,30 +70,6 @@
             color: #000;
             font-weight: bold;
         }
-
-        #additional-tabs {
-            display: none;
-            flex-direction: column;
-            align-items: flex-start;
-            position: absolute;
-            top: 100px;
-            left: 0;
-            width: 100%;
-            background-color: #e2e2e2;
-            padding: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .additional-tab {
-            margin-bottom: 5px;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            background-color: #dcdcdc;
-            transition: background-color 0.3s;
-        }
-        .additional-tab:hover {
-            background-color: #cccccc;
-        }
     </style>
 </head>
 <body>
@@ -105,13 +81,14 @@
         <div class="tab" onclick="activateTab('장비')">장비</div>
         <div class="tab" onclick="activateTab('일자리')">일자리</div>
     </div>
-    <div id="additional-tabs"></div>
+    <div id="additional-tabs" class="tab-container" style="display: none; top: 50px;"></div>
     <div id="record-button">🎤</div>
     <div id="transcript-box" contenteditable="true"></div>
     <button id="back-button">텍스트 초기화</button>
 
     <script>
         function activateTab(tabName) {
+            // 기본 탭 활성화 상태 업데이트
             var tabs = document.querySelectorAll('.tab-container .tab');
             tabs.forEach(tab => {
                 tab.classList.remove('active');
@@ -120,9 +97,12 @@
                 }
             });
 
+            // 추가 탭 생성
             var additionalTabs = document.getElementById('additional-tabs');
-            additionalTabs.innerHTML = '';
-            var tabsInfo = {
+            additionalTabs.innerHTML = ''; // 기존 탭 삭제
+            additionalTabs.style.display = 'flex'; // 추가 탭 컨테이너 표시
+
+            var tabData = {
                 '작성정보': 3,
                 '디테일': 4,
                 '안전규칙': 2,
@@ -131,17 +111,12 @@
                 '일자리': 3
             };
 
-            var numberOfTabs = tabsInfo[tabName];
-            if (numberOfTabs) {
-                for (var i = 0; i < numberOfTabs; i++) {
-                    var newTab = document.createElement('div');
-                    newTab.className = 'additional-tab';
-                    newTab.textContent = tabName + ' 추가 탭 ' + (i + 1);
-                    additionalTabs.appendChild(newTab);
-                }
-                additionalTabs.style.display = 'flex';
-            } else {
-                additionalTabs.style.display = 'none';
+            var numberOfTabs = tabData[tabName] || 0; // 선택된 탭에 해당하는 추가 탭 수
+            for (var i = 0; i < numberOfTabs; i++) {
+                var newTab = document.createElement('div');
+                newTab.className = 'tab';
+                newTab.textContent = tabName + ' 탭 ' + (i + 1);
+                additionalTabs.appendChild(newTab);
             }
         }
     </script>
