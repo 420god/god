@@ -6,26 +6,35 @@
     <title>음성 인식 인터페이스</title>
     <style>
         #record-button {
-            padding: 10px 20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: red;
+            color: white;
             font-size: 16px;
+            text-align: center;
+            line-height: 100px;
             cursor: pointer;
+            border: none;
+            outline: none;
+        }
+        #transcript {
+            margin-top: 20px;
         }
         #back-button {
             margin-top: 10px;
             padding: 5px 10px;
-            font-size: 14px;
             cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <button id="record-button">녹음 시작</button>
+    <button id="record-button">녹음</button>
     <div id="transcript"></div>
     <button id="back-button">텍스트 초기화</button>
 
     <script>
         var recognition;
-        var isRecording = false;
         if ('webkitSpeechRecognition' in window) {
             recognition = new webkitSpeechRecognition();
             recognition.continuous = true;
@@ -42,16 +51,14 @@
             var recordButton = document.getElementById('record-button');
             recordButton.onmousedown = function() {
                 recognition.start();
-                isRecording = true;
+                recordButton.style.backgroundColor = 'green';
                 recordButton.textContent = '녹음 중...';
             };
 
             recordButton.onmouseup = recordButton.onmouseleave = function() {
-                if (isRecording) {
-                    recognition.stop();
-                    isRecording = false;
-                    recordButton.textContent = '녹음 시작';
-                }
+                recognition.stop();
+                recordButton.style.backgroundColor = 'red';
+                recordButton.textContent = '녹음';
             };
 
             var backButton = document.getElementById('back-button');
