@@ -11,7 +11,7 @@
             align-items: center;
             height: 100vh;
             flex-direction: column;
-            padding-top: 60px; /* 탭 컨테이너를 위한 여백 */
+            padding-top: 60px;
         }
         #record-button {
             width: 200px;
@@ -41,7 +41,7 @@
 
         .tab-container {
             display: flex;
-            overflow-x: auto; /* 가로 스크롤 추가 */
+            overflow-x: auto;
             justify-content: center;
             align-items: center;
             width: 100%;
@@ -52,105 +52,72 @@
             top: 0;
             left: 0;
             height: 50px;
-            padding: 0 10px;
         }
         .tab {
             flex: none;
-            margin: 0 5px; /* 탭 간 간격 조정 */
-            padding: 8px 16px; /* 탭 크기 조정 */
+            margin: 0 5px;
+            padding: 8px 16px;
             cursor: pointer;
             transition: background-color 0.3s;
-            border-radius: 5px; /* 탭 모서리 둥글게 */
-            font-size: 14px; /* 폰트 크기 조정 */
+            border-radius: 5px;
+            font-size: 14px;
         }
         .tab:hover {
             background-color: #ddd;
         }
         .tab.active {
             background-color: #ddd;
-            color: #000; /* 활성화된 탭의 색상 변경 */
-            font-weight: bold; /* 활성화된 탭의 폰트 굵게 */
-        }
-
-        /* 반응형 미디어 쿼리 */
-        @media (max-width: 600px) {
-            .tab {
-                padding: 6px 12px; /* 모바일 환경에서 탭 크기 조정 */
-                font-size: 12px; /* 모바일 환경에서 폰트 크기 조정 */
-            }
-        }
-
-        ::-webkit-scrollbar {
-            height: 5px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555;
+            color: #000;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="tab-container">
-        <div class="tab" onclick="activateTab(this)">작성정보</div>
-        <div class="tab" onclick="activateTab(this)">작업내용</div>
-        <div class="tab" onclick="activateTab(this)">장비현황</div>
-        <div class="tab" onclick="activateTab(this)">인력현황</div>
-        <div class="tab" onclick="activateTab(this)">자재현황</div>
-        <div class="tab" onclick="activateTab(this)">안전관리</div>
+        <div class="tab" onclick="activateTab('작성정보')">작성정보</div>
+        <div class="tab" onclick="activateTab('디테일')">디테일</div>
+        <div class="tab" onclick="activateTab('안전규칙')">안전규칙</div>
+        <div class="tab" onclick="activateTab('아이템')">아이템</div>
+        <div class="tab" onclick="activateTab('장비')">장비</div>
+        <div class="tab" onclick="activateTab('일자리')">일자리</div>
     </div>
+    <div id="additional-tabs" class="tab-container" style="display: none; top: 50px;"></div>
     <div id="record-button">🎤</div>
     <div id="transcript-box" contenteditable="true"></div>
     <button id="back-button">텍스트 초기화</button>
 
     <script>
-        var recognition;
-        var transcriptBox = document.getElementById('transcript-box');
-
-        if ('webkitSpeechRecognition' in window) {
-            recognition = new webkitSpeechRecognition();
-            recognition.lang = 'ko-KR';
-            recognition.continuous = false;
-            recognition.interimResults = false;
-
-            recognition.onresult = function(event) {
-                var transcript = event.results[0][0].transcript;
-                transcriptBox.innerText += transcript + ' ';
-            };
-
-            recognition.onerror = function(event) {
-                console.error('Speech recognition error', event.error);
-            };
-
-            var recordButton = document.getElementById('record-button');
-            recordButton.addEventListener('touchstart', function(e) {
-                e.preventDefault();
-                recognition.start();
-                recordButton.style.backgroundColor = 'green';
-            }, false);
-
-            recordButton.addEventListener('touchend', function(e) {
-                e.preventDefault();
-                recognition.stop();
-                recordButton.style.backgroundColor = 'red';
-            }, false);
-
-            var backButton = document.getElementById('back-button');
-            backButton.onclick = function() {
-                transcriptBox.innerText = '';
-            };
-        } else {
-            transcriptBox.innerText = "이 브라우저는 음성 인식을 지원하지 않습니다.";
-        }
-
-        function activateTab(tabElement) {
-            var tabs = document.querySelectorAll('.tab');
+        function activateTab(tabName) {
+            // 기본 탭 활성화 상태 업데이트
+            var tabs = document.querySelectorAll('.tab-container .tab');
             tabs.forEach(tab => {
                 tab.classList.remove('active');
+                if (tab.textContent === tabName) {
+                    tab.classList.add('active');
+                }
             });
-            tabElement.classList.add('active');
+
+            // 추가 탭 생성
+            var additionalTabs = document.getElementById('additional-tabs');
+            additionalTabs.innerHTML = ''; // 기존 탭 삭제
+            additionalTabs.style.display = 'flex'; // 추가 탭 컨테이너 표시
+
+            var tabData = {
+                '작성정보': 3,
+                '디테일': 4,
+                '안전규칙': 2,
+                '아이템': 2,
+                '장비': 2,
+                '일자리': 3
+            };
+
+            var numberOfTabs = tabData[tabName] || 0; // 선택된 탭에 해당하는 추가 탭 수
+            for (var i = 0; i < numberOfTabs; i++) {
+                var newTab = document.createElement('div');
+                newTab.className = 'tab';
+                newTab.textContent = tabName + ' 탭 ' + (i + 1);
+                additionalTabs.appendChild(newTab);
+            }
         }
     </script>
 </body>
