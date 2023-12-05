@@ -49,14 +49,17 @@
         var transcriptBox = document.getElementById('transcript-box');
 
         if ('webkitSpeechRecognition' in window) {
-            recognition = new webkitSpeechRecognition();
-            recognition.continuous = false;
-            recognition.interimResults = false;
+            recognition = new webkitSpeechRecog
             recognition.lang = 'ko-KR'; // 한국어 설정
 
+
+            
             recognition.onresult = function(event) {
-                var transcript = event.results[0][0].transcript;
-                transcriptBox.innerText += transcript + ' ';
+                var transcript = '';
+                for (var i = event.resultIndex; i < event.results.length; ++i) {
+                    transcript += event.results[i][0].transcript;
+                }
+                document.getElementById('transcript').innerText = transcript;
             };
 
             recognition.onerror = function(event) {
