@@ -19,8 +19,11 @@
             outline: none;
             user-select: none; /* 텍스트 선택 방지 */
         }
-        #transcript {
+        #transcript-box {
             margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-height: 50px;
         }
         #back-button {
             margin-top: 10px;
@@ -30,46 +33,49 @@
     </style>
 </head>
 <body>
-    <div id="record-button">🎤</div> <!-- 버튼 대신 div 사용 -->
-    <div id="transcript"></div>
+    <div id="record-button">🎤</div>
+    <div id="transcript-box" contenteditable="true"></div> <!-- 편집 가능한 텍스트 박스 -->
     <button id="back-button">텍스트 초기화</button>
 
     <script>
         var recognition;
+        var isRecording = false; // 음성 인식 상태 추적
+        var transcriptBox = document.getElementById('transcript-box');
+
         if ('webkitSpeechRecognition' in window) {
             recognition = new webkitSpeechRecognition();
-            recognition.continuous = true;
-            recognition.interimResults = true;
+            recognition.continuous = false; // 연속적인 인식 비활성화
+            recognition.interimResults = false; // 중간 결과 제공 비활성화
 
             recognition.onresult = function(event) {
-                var transcript = '';
-                for (var i = event.resultIndex; i < event.results.length; ++i) {
-                    transcript += event.results[i][0].transcript;
-                }
-                document.getElementById('transcript').innerText = transcript;
+                var transcript = event.results[0][0].transcript;
+                transcriptBox.innerText += transcript + ' '; // 결과를 텍스트 박스에 추가
             };
 
             var recordButton = document.getElementById('record-button');
             
-            // 모바일 터치 이벤트 정확하게 처리
             recordButton.addEventListener('touchstart', function(e) {
-                e.preventDefault(); // 기본 행동 방지
+                e.preventDefault();
                 recognition.start();
+                isRecording = true;
                 recordButton.style.backgroundColor = 'green';
             }, false);
 
             recordButton.addEventListener('touchend', function(e) {
-                e.preventDefault(); // 기본 행동 방지
-                recognition.stop();
-                recordButton.style.backgroundColor = 'red';
+                e.preventDefault();
+                if (isRecording) {
+                    recognition.stop();
+                    isRecording = false;
+                    recordButton.style.backgroundColor = 'red';
+                }
             }, false);
 
             var backButton = document.getElementById('back-button');
             backButton.onclick = function() {
-                document.getElementById('transcript').innerText = '';
+                transcriptBox.innerText = ''; // 텍스트 박스 내용 초기화
             };
         } else {
-            document.getElementById('transcript').innerText = "이 브라우저는 음성 인식을 지원하지 않습니다.";
+            transcriptBox.innerText = "이 브라우저는 음성 인식을 지원하지 않습니다.";
         }
     </script>
 </body>
