@@ -38,6 +38,11 @@
             padding: 5px 10px;
             cursor: pointer;
         }
+
+         .save-button {
+            background-color: #28a745;
+            color: white;
+        }
         .tab-container {
             display: flex;
             overflow-x: auto;
@@ -91,6 +96,7 @@
     <div id="record-button">🎤</div>
     <div id="transcript-box" contenteditable="true"></div>
     <button id="back-button">텍스트 초기화</button>
+    <button id="save-button" class="button save-button">저장</button>
     <script>
     var savedTexts = {};
 
