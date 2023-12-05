@@ -108,6 +108,11 @@
         var tabKey = tab.textContent;
         var transcriptBox = document.getElementById('transcript-box');
         transcriptBox.innerText = savedTexts[tabKey] || '';
+
+        transcriptBox.addEventListener('blur', function() {
+        // 사용자가 텍스트 박스에서 포커스를 잃으면 페이지 상단으로 스크롤
+        window.scrollTo(0, 0);
+    });
     }
 
     function activateTab(tabName) {
