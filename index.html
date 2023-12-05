@@ -157,15 +157,17 @@
             var additionalTabs = document.getElementById('additional-tabs');
     additionalTabs.innerHTML = '';
     var tabTexts = tabData[tabName] || [];
-    tabTexts.forEach(text => {
+    tabTexts.forEach((text, index) => {
         var newTab = document.createElement('div');
         newTab.className = 'tab';
-        newTab.textContent = text; // 커스텀 텍스트 사용
+        newTab.textContent = text;
         newTab.onclick = function() { activateAdditionalTab(this); };
         additionalTabs.appendChild(newTab);
+
+        // 첫 번째 추가 탭을 자동으로 활성화
         if (index === 0) {
-                    activateAdditionalTab(newTab);
-                }
+            activateAdditionalTab(newTab);
+        }
     });
 }
 
