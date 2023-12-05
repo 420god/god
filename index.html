@@ -19,7 +19,7 @@
             background-color: red;
             color: white;
             font-size: 16px;
-            line-height: 200px; /* 높이와 일치 */
+            line-height: 200px;
             cursor: pointer;
             border: none;
             outline: none;
@@ -49,17 +49,14 @@
         var transcriptBox = document.getElementById('transcript-box');
 
         if ('webkitSpeechRecognition' in window) {
-            recognition = new webkitSpeechRecog
+            recognition = new webkitSpeechRecognition();
             recognition.lang = 'ko-KR'; // 한국어 설정
+            recognition.continuous = true;
+            recognition.interimResults = true;
 
-
-            
             recognition.onresult = function(event) {
-                var transcript = '';
-                for (var i = event.resultIndex; i < event.results.length; ++i) {
-                    transcript += event.results[i][0].transcript;
-                }
-                document.getElementById('transcript').innerText = transcript;
+                var transcript = event.results[0][0].transcript;
+                transcriptBox.innerText += transcript + ' ';
             };
 
             recognition.onerror = function(event) {
