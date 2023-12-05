@@ -42,11 +42,11 @@
         .tab-container {
             display: flex;
             overflow-x: auto;
-            justify-content: center;
+            justify-content: start;
             align-items: center;
             width: 100%;
             background-color: #f2f2f2;
-            padding: 10px 0;
+            padding: 5px 0;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             position: fixed;
             top: 0;
@@ -56,7 +56,7 @@
         .tab {
             flex: none;
             margin: 0 5px;
-            padding: 8px 16px;
+            padding: 5px 10px; 
             cursor: pointer;
             transition: background-color 0.3s;
             border-radius: 5px;
@@ -69,6 +69,12 @@
             background-color: #ddd;
             color: #000;
             font-weight: bold;
+        }
+        @media (max-width: 600px) {
+            .tab {
+                font-size: 12px; /* 폰트 크기 줄임 */
+                padding: 3px 6px; /* 모바일 환경에서 탭 크기 축소 */
+            }
         }
     </style>
 </head>
