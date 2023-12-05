@@ -52,26 +52,31 @@
             top: 0;
             left: 0;
             height: 50px;
+            padding: 0 10px;
         }
         .tab {
-            flex: 0 0 auto; /* 탭의 크기를 고정 */
-            margin: 0 10px;
-            padding: 10px 20px;
+            flex: none;
+            margin: 0 5px; /* 탭 간 간격 조정 */
+            padding: 8px 16px; /* 탭 크기 조정 */
             cursor: pointer;
             transition: background-color 0.3s;
+            border-radius: 5px; /* 탭 모서리 둥글게 */
+            font-size: 14px; /* 폰트 크기 조정 */
         }
         .tab:hover {
             background-color: #ddd;
         }
         .tab.active {
             background-color: #ddd;
+            color: #000; /* 활성화된 탭의 색상 변경 */
+            font-weight: bold; /* 활성화된 탭의 폰트 굵게 */
         }
 
         /* 반응형 미디어 쿼리 */
         @media (max-width: 600px) {
             .tab {
-                padding: 10px; /* 모바일 환경에서 탭 크기 줄임 */
-                font-size: 14px; /* 폰트 크기 조정 */
+                padding: 6px 12px; /* 모바일 환경에서 탭 크기 조정 */
+                font-size: 12px; /* 모바일 환경에서 폰트 크기 조정 */
             }
         }
     </style>
