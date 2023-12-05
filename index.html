@@ -1,55 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>음성 인식 제어 예제</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>음성 인식 인터페이스</title>
     <style>
-      #record-icon {
-        cursor: pointer;
-        font-size: 2rem;
-      }
+        #record-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #back-button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
     </style>
-  </head>
-  <body>
-    <div id="record-icon">🎤</div>
+</head>
+<body>
+    <button id="record-button">녹음 시작</button>
     <div id="transcript"></div>
+    <button id="back-button">텍스트 초기화</button>
 
     <script>
-      var recognition;
-      var isRecording = false;
-      if ("webkitSpeechRecognition" in window) {
-        recognition = new webkitSpeechRecognition();
-        recognition.continuous = true;
-        recognition.interimResults = true;
+        var recognition;
+        var isRecording = false;
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
 
-        recognition.onresult = function (event) {
-          var transcript = "";
-          for (var i = event.resultIndex; i < event.results.length; ++i) {
-            transcript += event.results[i][0].transcript;
-          }
-          document.getElementById("transcript").innerText = transcript;
-        };
+            recognition.onresult = function(event) {
+                var transcript = '';
+                for (var i = event.resultIndex; i < event.results.length; ++i) {
+                    transcript += event.results[i][0].transcript;
+                }
+                document.getElementById('transcript').innerText = transcript;
+            };
 
-        recognition.onerror = function (event) {
-          console.error("Recognition error", event.error);
-        };
+            var recordButton = document.getElementById('record-button');
+            recordButton.onmousedown = function() {
+                recognition.start();
+                isRecording = true;
+                recordButton.textContent = '녹음 중...';
+            };
 
-        var recordIcon = document.getElementById("record-icon");
-        recordIcon.onclick = function () {
-          if (isRecording) {
-            recognition.stop();
-            recordIcon.textContent = "🎤";
-          } else {
-            recognition.start();
-            recordIcon.textContent = "⏹️";
-          }
-          isRecording = !isRecording;
-        };
-      } else {
-        document.getElementById("transcript").innerText =
-          "이 브라우저는 음성 인식을 지원하지 않습니다.";
-      }
+            recordButton.onmouseup = recordButton.onmouseleave = function() {
+                if (isRecording) {
+                    recognition.stop();
+                    isRecording = false;
+                    recordButton.textContent = '녹음 시작';
+                }
+            };
+
+            var backButton = document.getElementById('back-button');
+            backButton.onclick = function() {
+                document.getElementById('transcript').innerText = '';
+            };
+        } else {
+            document.getElementById('transcript').innerText = "이 브라우저는 음성 인식을 지원하지 않습니다.";
+        }
     </script>
-  </body>
+</body>
 </html>
