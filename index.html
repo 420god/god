@@ -113,6 +113,7 @@
     <button id="save-button" class="button save-button">저장</button>
 
     <script>
+        var savedTexts = {};
         
          function activateAdditionalTab(tab) {
             var additionalTabs = document.querySelectorAll('#additional-tabs .tab');
@@ -123,6 +124,10 @@
 
              // 선택된 탭의 텍스트를 녹음 버튼 위에 표시
             document.getElementById('selected-tab-text').textContent = tab.textContent;
+        }
+        var transcriptBox = document.getElementById('transcript-box');
+            var tabKey = tab.textContent;
+            transcriptBox.innerText = savedTexts[tabKey] || '';
         }
 
  
@@ -158,6 +163,9 @@
         newTab.textContent = text; // 커스텀 텍스트 사용
         newTab.onclick = function() { activateAdditionalTab(this); };
         additionalTabs.appendChild(newTab);
+        if (index === 0) {
+                    activateAdditionalTab(newTab);
+                }
     });
 }
 
@@ -199,6 +207,16 @@
         } else {
             transcriptBox.innerText = "이 브라우저는 음성 인식을 지원하지 않습니다.";
         }
+
+        function saveText() {
+            var selectedTabText = document.getElementById('selected-tab-text').textContent;
+            var transcriptBox = document.getElementById('transcript-box');
+            savedTexts[selectedTabText] = transcriptBox.innerText;
+        }
+
+        // 저장 버튼 이벤트 리스너 추가
+        var saveButton = document.getElementById('save-button');
+        saveButton.addEventListener('click', saveText);
     </script>
 </body>
 </html>
