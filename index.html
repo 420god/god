@@ -42,12 +42,21 @@
             cursor: pointer;
         }
 
-         .tab-container {
-            overflow-x: auto; /* 가로 스크롤 추가 */
-            white-space: nowrap; /* 탭들을 한 줄에 표시 */
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            background-color: #f2f2f2;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 50px;
         }
         .tab {
-            display: inline-block;
+            
             margin: 0 10px;
             padding: 10px 20px;
             cursor: pointer;
@@ -58,15 +67,6 @@
         }
         .tab.active { /* 활성 탭 스타일 */
             background-color: #ddd;
-        }
-        ::-webkit-scrollbar {
-            height: 5px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #888;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555;
         }
     </style>
 </head>
