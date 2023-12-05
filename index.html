@@ -40,9 +40,40 @@
             padding: 5px 10px;
             cursor: pointer;
         }
+
+         .tab-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            background-color: #f2f2f2;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        .tab {
+            margin: 0 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .tab:hover {
+            background-color: #ddd;
+        }
     </style>
 </head>
 <body>
+    <div class="tab-container">
+        <div class="tab">탭 1</div>
+        <div class="tab">탭 2</div>
+        <div class="tab">탭 3</div>
+        <div class="tab">탭 4</div>
+        <div class="tab">탭 5</div>
+        <div class="tab">탭 6</div>
+        <div class="tab">탭 7</div>
+    </div>
     <div id="record-button">🎤</div>
     <div id="transcript-box" contenteditable="true"></div>
     <button id="back-button">텍스트 초기화</button>
