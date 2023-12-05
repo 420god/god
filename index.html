@@ -70,6 +70,24 @@
             color: #000;
             font-weight: bold;
         }
+        .button {
+            padding: 10px 15px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .button:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        .save-button {
+            background-color: #28a745;
+            color: white;
+        }
+        
         @media (max-width: 600px) {
             .tab {
                 font-size: 12px; /* 폰트 크기 줄임 */
@@ -92,6 +110,7 @@
     <div id="record-button">🎤</div>
     <div id="transcript-box" contenteditable="true"></div>
     <button id="back-button">텍스트 초기화</button>
+    <button id="save-button" class="button save-button">저장</button>
 
     <script>
         
