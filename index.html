@@ -88,6 +88,7 @@
         <div class="tab" onclick="activateTab('일자리')">안전관리</div>
     </div>
     <div id="additional-tabs" class="tab-container" style="display: none; top: 50px;"></div>
+    <div id="selected-tab-text" style="margin-top: 10px; font-size: 20px;"></div> <!-- 추가된 텍스트 표시 영역 -->
     <div id="record-button">🎤</div>
     <div id="transcript-box" contenteditable="true"></div>
     <button id="back-button">텍스트 초기화</button>
@@ -100,6 +101,9 @@
                 addTab.classList.remove('active');
             });
             tab.classList.add('active');
+
+             // 선택된 탭의 텍스트를 녹음 버튼 위에 표시
+            document.getElementById('selected-tab-text').textContent = tab.textContent;
         }
 
  
