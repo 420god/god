@@ -125,23 +125,25 @@
             additionalTabs.style.display = 'flex';
 
             var tabData = {
-                '작성정보': 3,
-                '디테일': 4,
-                '안전규칙': 2,
-                '아이템': 2,
-                '장비': 2,
-                '일자리': 3
+                '작성정보': ['정보 1', '정보 2', '정보 3'],
+                '디테일': ['정보 1', '정보 2', '정보 3','정보 3'],
+                '안전규칙': ['정보 1', '정보 2'],
+                '아이템': ['정보 1', '정보 2'],
+                '장비': ['정보 1', '정보 2'],
+                '일자리': ['정보 1', '정보 2', '정보 3']
             };
 
-            var numberOfTabs = tabData[tabName] || 0;
-            for (var i = 0; i < numberOfTabs; i++) {
-                var newTab = document.createElement('div');
-                newTab.className = 'tab';
-                newTab.textContent = tabName + ' 탭 ' + (i + 1);
-                newTab.onclick = function() { activateAdditionalTab(this); }; // 클릭 이벤트 핸들러 추가
-                additionalTabs.appendChild(newTab);
-            }
-        }
+            var additionalTabs = document.getElementById('additional-tabs');
+    additionalTabs.innerHTML = '';
+    var tabTexts = tabData[tabName] || [];
+    tabTexts.forEach(text => {
+        var newTab = document.createElement('div');
+        newTab.className = 'tab';
+        newTab.textContent = text; // 커스텀 텍스트 사용
+        newTab.onclick = function() { activateAdditionalTab(this); };
+        additionalTabs.appendChild(newTab);
+    });
+}
 
         var recognition;
         var transcriptBox = document.getElementById('transcript-box');
